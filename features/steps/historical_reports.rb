@@ -44,4 +44,8 @@ class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
   step 'it should show that he is entitled to nothing' do
     pending 'step not implemented'
   end
+
+  step 'it should show that $150 is still to go before we break even' do
+    pending 'step not implemented'
+  end
 end

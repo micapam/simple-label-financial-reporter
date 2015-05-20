@@ -15,3 +15,4 @@ Feature: Historical reports
     When I generate the report
     Then it should greet him as Dear Mr Whiteboy
     And it should show that he is entitled to nothing
+    And it should show that $150 is still to go before we break even
