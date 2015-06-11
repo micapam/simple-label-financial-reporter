@@ -10,11 +10,12 @@ Feature: Historical reports
     And it cost $100 for mastering
     And it cost $50 for cover art
     And it cost $20 for digital distribution
+    And it cost $200 for promotion
     And we have agreed to split revenue evenly after profits    
     And this is the first time I am doing a report
-    And the release has made $50
+    And it has taken $300 in sales
     And I have all this info in spreadsheets
     When I generate the report
     Then it should greet him as Dear Mr Whiteboy
     And it should show that he is entitled to nothing
-    And it should show that $120 is still to go before we break even
+    And it should show that $70 is still to go before we break even
