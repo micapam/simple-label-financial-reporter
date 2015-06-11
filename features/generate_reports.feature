@@ -6,7 +6,7 @@ Feature: Historical reports
   Scenario: First report, not yet broken even
     Given the only artist on my books is DJ Doo Doo   
     And his real name is Tarquin Whiteboy
-    And his only release, 'Wubz 4 Eva' was published six months ago
+    And his only release, 'Wubz 4 Eva' was published four months ago
     And it cost $100 for mastering
     And it cost $50 for cover art
     And it cost $20 for digital distribution
