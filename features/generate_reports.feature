@@ -7,7 +7,9 @@ Feature: Historical reports
     Given the only artist on my books is DJ Doo Doo   
     And his real name is Tarquin Whiteboy
     And his only release, 'Wubz 4 Eva' was published six months ago
-    And it cost $200 in total to produce
+    And it cost $100 for mastering
+    And it cost $50 for cover art
+    And it cost $20 for digital distribution
     And we have agreed to split revenue evenly after profits    
     And this is the first time I am doing a report
     And the release has made $50
@@ -15,4 +17,4 @@ Feature: Historical reports
     When I generate the report
     Then it should greet him as Dear Mr Whiteboy
     And it should show that he is entitled to nothing
-    And it should show that $150 is still to go before we break even
+    And it should show that $120 is still to go before we break even
