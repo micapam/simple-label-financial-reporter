@@ -11,7 +11,7 @@ Feature: Historical reports
     And it cost $50 for cover art
     And it cost $20 for digital distribution
     And it cost $200 for promotion
-    And we have agreed to split revenue evenly after profits    
+    And we have agreed to split revenue evenly after costs   
     And this is the first time I am doing a report
     And it has taken $300 in sales
     And I have all this info in spreadsheets
