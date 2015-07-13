@@ -10,7 +10,8 @@ class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
   end
 
   step 'his only release, \'Wubz 4 Eva\' was published six months ago' do
-    @release = Release.new title: 'Wubz 4 Eva', release_date: 4.months.ago, artist: @artist
+    @release = Release.new title: 'Wubz 4 Eva', release_date: 4.months.ago,
+      artist: @artist
   end
   
   step 'it cost $100 for mastering' do
@@ -28,7 +29,7 @@ class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
   step 'it cost $200 for promotion' do
     @release.promotion_cost = 200.0
   end
-
+ 
   step 'we have agreed to split revenue evenly after costs' do
     @release.artist_split = 0.5
     @release.recoup_costs_before_split = true
@@ -39,13 +40,17 @@ class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
   end
 
   step 'it has taken $300 in sales' do
-    @release.sales_periods << SalesPeriod.new begins_at: 6.months.ago, ends_at: Time.now, revenue: 300.0
+    @release.sales_periods << SalesPeriod.new(begins_at: 6.months.ago,
+      ends_at: Time.now, revenue: 300.0)
   end
 
   step 'I have all this info in spreadsheets' do
-    DataStore.releases << @release
-    DataStore.save
-    DataStore.reset # Ensure data is taken from saved spreadsheets and not just persisted in memory
+    DataStore.artists << artist
+    DataStore.save!
+
+    # Ensure data is taken from saved spreadsheets and not just
+    # persisted in memory
+    DataStore.reset 
   end
 
   step 'I generate the report' do
