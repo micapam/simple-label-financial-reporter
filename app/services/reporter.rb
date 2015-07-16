@@ -5,6 +5,10 @@ class Reporter
 
     def generate
       DataStore.load
+      
+      DataStore.artists.each do |artist|
+        @reports << Report.new artist        
+      end
     end
 
     def initialise

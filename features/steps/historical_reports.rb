@@ -46,7 +46,7 @@ class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
 
   step 'I have all this info in spreadsheets' do
     DataStore.artists << artist
-    DataStore.save!
+    DataStore.save! destroy_records: true
 
     # Ensure data is taken from saved spreadsheets and not just
     # persisted in memory

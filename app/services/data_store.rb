@@ -32,7 +32,14 @@ class DataStore
     end
 
     # Overwrite data files with artists and releases in memory
-    def save!
+    def save!(destroy_records: false)
+      unless destroy_records
+        if File.exists? artists_path || File.exists? releases_path 
+          raise 'Destructive method! Files already exist. If you are OK to'
+            ' destroy them, call #save! again with with destroy_records: true'
+        end
+      end
+      
       CSV.open artists_path, 'wb' do |csv|
       	artists.each do |artist|
       	  csv << create_row(artist)
