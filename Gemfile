@@ -5,6 +5,7 @@ gem 'activemodel'
 gem 'activemodel-associations', require: true
 gem 'activesupport'
 
+# inflections
 # action mailer ? 
 # gmail ? 
 
