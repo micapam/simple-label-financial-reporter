@@ -6,5 +6,11 @@ A simple script to generate financial reports.
 
 In order to run the script you need a few spreadsheets in CSV (comma-separated values) form. This is one of the export options from Excel, Google Docs etc. 
 
-### Artist spreadsheet
+### Artists spreadsheet
+
+### Releases spreadsheet
+
+### Payouts spreadsheet
+
+### Sales period spreadsheet(s)
 

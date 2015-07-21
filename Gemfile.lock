@@ -26,6 +26,7 @@ GEM
     i18n (0.7.0)
     json (1.8.2)
     minitest (5.7.0)
+    pdfkit (0.8.0)
     rake (10.4.2)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
@@ -45,8 +46,10 @@ GEM
       gherkin-ruby (>= 0.3.2)
       json
     thread_safe (0.3.5)
+    tilt (1.4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    wkhtmltopdf-binary (0.9.9.3)
 
 PLATFORMS
   ruby
@@ -55,6 +58,12 @@ DEPENDENCIES
   activemodel
   activemodel-associations
   activesupport
+  pdfkit
   rake
   rspec
   spinach
+  tilt
+  wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.5
