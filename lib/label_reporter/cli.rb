@@ -23,6 +23,11 @@ module LabelReporter
 
       begin
         OptionParser.new do |opts|
+          opts.on('-a', '--only_artist ARTIST',
+              'Only generate report for a specific artist') do |artist|
+            LabelReporter.config.only_artist = artist
+          end
+          
           opts.on('-c', '--company_config FILE_PATH',
               'Use a custom company configuration file') do |file|
             LabelReporter.config.company_config_file = file
@@ -33,17 +38,17 @@ module LabelReporter
             LabelReporter.config.data_path = path
           end
 
-          opts.on('-d', '--output_format FORMAT',
+          opts.on('-f', '--output_format FORMAT',
               'Data format for output (pdf, html; default pdf)') do |format|
             LabelReporter.config.output_format = format
           end
 
-          opts.on('-d', '--output_path PATH',
+          opts.on('-o', '--output_path PATH',
               'Use a custom output path') do |path|
             LabelReporter.config.output_path = path
           end
 
-          opts.on('-d', '--until_date PATH',
+          opts.on('-u', '--until_date PATH',
               'Ignore all sales periods beyond a given date') do |date|
             LabelReporter.config.until_date = Date.parse(date)
           end

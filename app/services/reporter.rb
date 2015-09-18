@@ -26,6 +26,10 @@ class Reporter
       reports.each do |report|
         report.render
         artist_name = report.artist.primary_alias
+      
+        only_artist = LabelReporter.config.only_artist
+        next if only_artist.present? && only_artist != artist_name
+        
         safe_artist_name = artist_name.parameterize.gsub '-', '_'
         file_name = "#{safe_artist_name.underscore}_#{date}"
         path = "#{LabelReporter.config.output_path}/#{file_name}"

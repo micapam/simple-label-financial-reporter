@@ -7,7 +7,7 @@ module LabelReporter
 
   class Config
     attr_writer :company_config_file, :data_path, :output_format,
-      :output_path, :until_date
+      :only_artist, :output_path, :until_date
     
     def company_config_file
       @company_config_file || './config/company.yaml'
@@ -15,6 +15,10 @@ module LabelReporter
     
     def data_path
       @data_path || './data/real'
+    end
+    
+    def only_artist
+      @only_artist
     end
     
     def output_format

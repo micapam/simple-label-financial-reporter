@@ -22,10 +22,10 @@ class DataStore
       end
     end
     
-    def latest_sales_period
+    def latest_sales_period      
       sales_periods.sort { |period|
         period.ends_at
-      }.last
+      }.reverse.last
     end
 
     def load
@@ -43,7 +43,11 @@ class DataStore
       
       sales_period_paths.each do |path|
         date_str = path.scan(/\d{8}/).first
-        sales_period = SalesPeriod.new(ends_at: Date.parse(date_str),
+        date = Date.parse(date_str)
+        
+        next if date > LabelReporter.config.until_date
+        
+        sales_period = SalesPeriod.new(ends_at: date,
           begins_at: last_sales_period.try(:ends_at))
         
         CSV.foreach path, headers: :first_row do |row|
@@ -188,7 +192,7 @@ class DataStore
     
     def sales_period_paths
       Dir["#{config.data_path}/sales_*.csv"].select do |path|
-        path =~ /sales_\d{8}\.csv$/
+        path =~ /sales_\d{8}\.csv$/ 
       end
     end
 
