@@ -1,7 +1,15 @@
 ENV['RAILS_ENV'] = 'test'
 
 require 'rspec'
+require './config/company'
+require 'spinach/frameworks/rspec'
 
-Dir['./app/**/*.rb'].each {|file| require file }
+%w(lib app).each do |dir|
+  Dir["./#{dir}/**/*.rb"].each do |file|
+    require file
+  end
+end
 
-
+DataStore.configure do |config|
+  config.data_location = 'data/test'
+end

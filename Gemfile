@@ -2,9 +2,10 @@ source 'https://rubygems.org'
 
 gem 'rake'
 gem 'activemodel'
-gem 'activemodel-associations', require: true
-gem 'activesupport'
+gem 'activemodel-associations'
+gem 'activesupport', require: true
 gem 'tilt'
+gem 'haml'
 gem 'pdfkit'
 gem 'wkhtmltopdf-binary'
 

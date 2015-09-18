@@ -1,3 +1,6 @@
+require 'active_support'
+require 'active_support/core_ext'
+
 class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
   include Reporting
 
@@ -9,9 +12,9 @@ class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
     @artist.real_name = 'Tarquin Whiteboy'
   end
 
-  step 'his only release, \'Wubz 4 Eva\' was published six months ago' do
+  step 'his only release, \'Wubz 4 Eva\' was published four months ago' do
     @release = Release.new title: 'Wubz 4 Eva', release_date: 4.months.ago,
-      artist: @artist
+      artist: @artist, catalogue_number: 'DISC02'
   end
   
   step 'it cost $100 for mastering' do
@@ -40,12 +43,18 @@ class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
   end
 
   step 'it has taken $300 in sales' do
-    @release.sales_periods << SalesPeriod.new(begins_at: 6.months.ago,
-      ends_at: Time.now, revenue: 300.0)
+    @sales_period = SalesPeriod.new begins_at: 6.months.ago, ends_at: Time.now
+    tally = RevenueTally.new(sales_revenue: 300.0, licensing_revenue: 0.0,
+      ongoing_costs: 0.0, release: @release, sales_period: @sales_period)
+      
+    @release.revenue_tallies << tally
+    @sales_period.revenue_tallies << tally
   end
 
   step 'I have all this info in spreadsheets' do
-    DataStore.artists << artist
+    DataStore.artists << @artist
+    DataStore.releases << @release
+    DataStore.sales_periods << @sales_period
     DataStore.save! destroy_records: true
 
     # Ensure data is taken from saved spreadsheets and not just
@@ -56,17 +65,19 @@ class Spinach::Features::HistoricalReports < Spinach::FeatureSteps
   step 'I generate the report' do
     Reporter.generate
     @report = Reporter.reports.first 
+    @report.render
+    File.write('./output/report.html', @report.content)
   end
 
-  step 'it should greet him as Dear Mr Whiteboy' do
-    expect(@report.body).to match /Dear Mr Whiteboy/
+  step 'it should greet him by name' do
+    expect(@report.content).to match /Dear\s+Tarquin Whiteboy/
   end
 
   step 'it should show that he is entitled to nothing' do
-    expect(@report.body).to match /no funds are to be dispatched at this time/
+    expect(@report.content).to match /no funds are to be dispatched at this time/
   end
 
   step 'it should show that $150 is still to go before we break even' do
-    expect(@report.body).to match /Net balance: -150.00/
+    expect(@report.content).to match /Net balance: -150.00/
   end
 end

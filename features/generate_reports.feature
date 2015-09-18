@@ -16,6 +16,6 @@ Feature: Historical reports
     And it has taken $300 in sales
     And I have all this info in spreadsheets
     When I generate the report
-    Then it should greet him as Dear Mr Whiteboy
+    Then it should greet him by name
     And it should show that he is entitled to nothing
     And it should show that $70 is still to go before we break even

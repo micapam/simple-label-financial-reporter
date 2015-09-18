@@ -1,40 +1,58 @@
 !!! 5
 %html
   %head
-    %meta{ :charset => "utf-8" }/
+    %meta{ :charset => "utf-8" }
     
-    :css 
+    :css
+    
+      table, th, td {
+         border: 1px solid black;
+      }
       
-
+      #address .line {
+        display: block;
+        margin-left: 60%;
+      }
+      
+      #sender {
+        margin-top: 80px;
+      }
+    
   %body{ :lang => 'en' }
     #address
-      %span.line =company.street_address
-      %span.line =company.town
-      %span.line =company.state
-      %span.line =company.postcode
-      %span.line =company.country
+      %span.line
+        =COMPANY.street_address
+      %span.line
+        =COMPANY.town
+      %span.line
+        =COMPANY.state
+      %span.line
+        =COMPANY.postcode
+      %span.line
+        =COMPANY.country
     #greeting
       Dear 
-      =@artist.real_name
+      =artist.real_name
       
     %p
       I am writing to provide a revenue and cost summary and breakdown for
       your music released on 
-      =company.company_name
+      =COMPANY.company_name
       during 
-      =@sales_period.to_s
+      =current_sales_period.to_s
       as agreed under our contractual arrangements.
     %p
       The following table provides a summary of expenditures and revenues:
       
     %table.report
       %tr
-        %th{colspan: 2} Release
-        %th{colspan: 2} Balance carried forward
-        %th{rowspan: 4} Costs
-        %th{rowspan: 2} Revenue
-        %th{colspan: 2} Total
-        %th{colspan: 2} Split
+        %th{rowspan: 2} Release
+        %th{rowspan: 2} Balance carried forward
+        %th{colspan: 4} Costs
+        %th{colspan: 2} Revenue
+        %th{rowspan: 2} Total
+        %th{rowspan: 2} Split
+        %th{rowspan: 2} Owing
       %tr
         %th Mastering
         %th Artwork
@@ -42,39 +60,53 @@
         %th Promo
         %th Dist. sales
         %th Licensing
-      - @artist.releases.each do |release|
+      - artist.releases_with_sales.each do |release|
         %tr 
-          %td =release.title
-          %td =release.balance(include_latest_tally: false)
-          %td =release.only_first :mastering_cost
-          %td =release.only_first :artwork_cost
-          %td =release.only_first :distribution_cost
-          %td =release.promotion_and_ongoing_cost
-          %td =release.latest_tally.sales_revenue
-          %td =release.latest_tally.licensing_revenue
-          %td =release.balance
-          %td =release.owed_to_artist
+          %td 
+            =release.title
+          %td
+            =release.only_non_first :balance_carried_forward
+          %td
+            =release.only_first :mastering_cost
+          %td
+            =release.only_first :artwork_cost
+          %td
+            =release.only_first :distribution_cost
+          %td
+            =release.only_first :promotion_and_ongoing_cost
+          %td
+            =release.latest_tally.sales_revenue
+          %td
+            =release.latest_tally.licensing_revenue
+          %td 
+            =release.balance
+          %td 
+            =release.artist_split
+          %td
+            =release.owed_to_artist
       %tr
-        %td.grand_total_label{rowspan: 9} Total to artist:
-        %td =@artist.amount_owed
+        %td.grand_total_label{colspan: 10} Total to artist:
+        %td
+          =artist.amount_owed
         
     %p
       Under the terms of our agreement, all profits remaining after costs
       have been taken into account are to be divided evenly between the artist
       (yourself) and the label
-      ="(#{company.company_name})."
-      -if @artist.amount_owed > 0
+      ="(#{COMPANY.company_name})."
+      -if artist.amount_owed > 0
         Accoring to the above calculations,
-        ="$#{@artist.amount_owed}"
+        %span
+          ="$#{artist.amount_owed}"
         is owing, and will be dispatched shortly.
       -else
         To date, sales per release have not yet recouped the investment, and
-        therefore no funds are to be dispatched at the present time. 
+        therefore no funds are to be dispatched at this time. 
         
     %p
       Sincerely yours,
       
-    %p 
-      =company.sender_name
+    %p#sender 
+      =COMPANY.sender_name
       %br
-      ="#{company.sender_title}, #{company.company_name}"
+      ="#{COMPANY.sender_title}, #{COMPANY.company_name}"

@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+begin
+  require "bundler/setup"
+rescue LoadError
+end
+
+begin
+  require 'label_reporter'
+rescue LoadError
+  require_relative '../lib/label_reporter'
+end
+
+cli = LabelReporter::Cli.new(ARGV)
+exit cli.run
